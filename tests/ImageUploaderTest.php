@@ -20,4 +20,21 @@ class ImageUploaderTest extends TestCase
             'error' => UPLOAD_ERR_NO_FILE
         ]);
     }
+
+
+    public function test_upload_returns_uploaded_image(): void
+    {
+        $uploader = new ImageUploader();
+
+        $result = $uploader->upload([
+            'name' => 'photo.jpg',
+            'tmp_name' => '/tmp/photo.jpg',
+            'error' => UPLOAD_ERR_OK
+        ]);
+
+        $this->assertInstanceOf(
+            \Alexanstgr\ImageUploader\UploadedImage::class,
+            $result
+        );
+    }
 }
