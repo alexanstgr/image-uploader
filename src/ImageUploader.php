@@ -25,6 +25,10 @@ class ImageUploader
             throw new UploadException('Upload failed');
         }
 
+        // large size exception
+        if ($file['size'] > $this->config['maxSize']) {
+            throw new UploadException('File is too large');
+        }
         return new UploadedImage(
             $file['name'],
             $file['tmp_name'],

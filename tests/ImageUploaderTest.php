@@ -29,12 +29,31 @@ class ImageUploaderTest extends TestCase
         $result = $uploader->upload([
             'name' => 'photo.jpg',
             'tmp_name' => '/tmp/photo.jpg',
-            'error' => UPLOAD_ERR_OK
+            'error' => UPLOAD_ERR_OK,
+            'size' => 500
         ]);
 
         $this->assertInstanceOf(
             \Alexanstgr\ImageUploader\UploadedImage::class,
             $result
         );
+    }
+
+
+
+    public function test_upload_fails_when_file_is_too_large(): void
+    {
+        $uploader = new ImageUploader([
+            'maxSize' => 1000
+        ]);
+
+        $this->expectException(UploadException::class);
+
+        $uploader->upload([
+            'name' => 'large-image.jpg',
+            'tmp_name' => '/tmp/large-image.jpg',
+            'error' => UPLOAD_ERR_OK,
+            'size' => 5000
+        ]);
     }
 }
