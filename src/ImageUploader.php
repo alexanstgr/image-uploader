@@ -2,6 +2,8 @@
 
 namespace Alexanstgr\ImageUploader;
 
+use Alexanstgr\ImageUploader\Exceptions\UploadException;
+
 class ImageUploader
 {
     private array $config;
@@ -14,5 +16,19 @@ class ImageUploader
             'allowedExtensions' => ['jpg', 'jpeg', 'png', 'webp'],
             'createDirectory' => true,
         ], $config);
+    }
+
+
+    public function upload(array $file): UploadedImage
+    {
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            throw new UploadException('Upload failed');
+        }
+
+        return new UploadedImage(
+            $file['name'],
+            $file['tmp_name'],
+            pathinfo($file['name'], PATHINFO_EXTENSION)
+        );
     }
 }
