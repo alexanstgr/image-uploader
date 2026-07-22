@@ -1,0 +1,19 @@
+{
+    "name": "alexanstgr/image-uploader",
+    "description": "A simple and extensible image uploader for PHP applications.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Alexanstgr\\ImageUploader\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "alexanstgr",
+            "email": "alexanstgr@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
