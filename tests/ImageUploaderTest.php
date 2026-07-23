@@ -56,4 +56,21 @@ class ImageUploaderTest extends TestCase
             'size' => 5000
         ]);
     }
+
+
+
+
+    public function test_upload_fails_when_extension_is_not_allowed(): void
+    {
+        $uploader = new ImageUploader();
+
+        $this->expectException(UploadException::class);
+
+        $uploader->upload([
+            'name' => 'inkscape.exe',
+            'tmp_name' => '/tmp/inkscape.exe',
+            'error' => UPLOAD_ERR_OK,
+            'size' => 500,
+        ]);
+    }
 }

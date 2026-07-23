@@ -29,10 +29,18 @@ class ImageUploader
         if ($file['size'] > $this->config['maxSize']) {
             throw new UploadException('File is too large');
         }
+
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        // check if extension is allowed
+        if (!in_array($extension, $this->config['allowedExtensions'], true)) {
+            throw new UploadException("Extension '{$extension}' is not allowed.");
+        }
+
         return new UploadedImage(
             $file['name'],
             $file['tmp_name'],
-            pathinfo($file['name'], PATHINFO_EXTENSION)
+            $extension
         );
     }
 }
